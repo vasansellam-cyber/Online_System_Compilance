@@ -14,6 +14,7 @@ import {
   Moon
 } from 'lucide-react';
 import './UserDashboard.css';
+const API = import.meta.env.VITE_API_URL;
 
 const UserDashboard = () => {
   const [user, setUser] = useState({ email: '', role: '', username: '' });
@@ -60,7 +61,7 @@ const UserDashboard = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) return;
-        const response = await axios.get('http://localhost:5000/api/notifications', {
+        const response = await axios.get(`${API}/api/notifications`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const unread = response.data.filter(n => !n.read).length;

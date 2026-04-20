@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { RefreshCw, Database } from 'lucide-react';
 import '../user/UserComplaints.css'; // Reuse table stylings
+const API = import.meta.env.VITE_API_URL;
 
 const AdminComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -15,8 +16,8 @@ const AdminComplaints = () => {
       setLoading(true);
       const token = localStorage.getItem('token');
       const [compRes, usersRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/admin/complaints', { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('http://localhost:5000/api/admin/users', { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`${API}/api/admin/complaints`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`${API}/api/admin/users`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
       setComplaints(compRes.data);
       setResolvers(usersRes.data.filter(u => u.role === 'resolver'));
@@ -36,7 +37,7 @@ const AdminComplaints = () => {
     setUpdatingId(id);
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/admin/complaints/${id}/assign`, 
+      await axios.patch(`${API}/api/admin/complaints/${id}/assign`, 
         { resolverId: newResolverId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

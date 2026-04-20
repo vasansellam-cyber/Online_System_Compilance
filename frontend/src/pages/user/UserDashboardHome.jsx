@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FileText, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import './UserDashboardHome.css';
+const API = import.meta.env.VITE_API_URL;
 
 const UserDashboardHome = () => {
   const [stats, setStats] = useState({
@@ -16,7 +17,7 @@ const UserDashboardHome = () => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/complaints/stats', {
+        const response = await axios.get(`${API}/api/complaints/stats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(response.data);

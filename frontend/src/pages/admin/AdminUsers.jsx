@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Shield, ShieldAlert, Check, X } from 'lucide-react';
 import '../user/UserComplaints.css'; // Reuse table stylings
+const API = import.meta.env.VITE_API_URL;
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/users', {
+      const response = await axios.get(`${API}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data);
@@ -30,7 +31,7 @@ const AdminUsers = () => {
   const toggleBlock = async (id, currentStatus) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/admin/users/${id}/block`, {}, {
+      await axios.patch(`${API}/api/admin/users/${id}/block`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers(); // refresh data

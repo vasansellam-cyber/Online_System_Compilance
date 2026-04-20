@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import './SubmitComplaint.css';
+const API = import.meta.env.VITE_API_URL;
 
 const SubmitComplaint = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const SubmitComplaint = () => {
     
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/complaints', formData, {
+      await axios.post(`${API}/api/complaints`, formData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

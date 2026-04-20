@@ -3,6 +3,7 @@ import { Mail, Lock, UserPlus, AlertCircle, ArrowRight, CheckCircle2 } from 'luc
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
+const API = import.meta.env.VITE_API_URL;
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
@@ -26,7 +27,7 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${API}/api/auth/register`, {
         email: formData.email,
         password: formData.password
       });

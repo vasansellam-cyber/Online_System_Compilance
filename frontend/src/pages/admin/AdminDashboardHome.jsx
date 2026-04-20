@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Users, FileText, CheckCircle2, AlertCircle, ShieldAlert } from 'lucide-react';
 import '../user/UserDashboardHome.css'; // Reusing for grid styling
+const API = import.meta.env.VITE_API_URL;
 
 const AdminDashboardHome = () => {
   const [stats, setStats] = useState({
@@ -16,7 +17,7 @@ const AdminDashboardHome = () => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/admin/stats', {
+        const response = await axios.get(`${API}/api/admin/stats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(response.data);

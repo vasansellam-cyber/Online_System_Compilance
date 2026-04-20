@@ -3,6 +3,7 @@ import { Mail, Lock, LogIn, AlertCircle, RefreshCw, User, X } from 'lucide-react
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
+const API = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const [formData, setFormData] = useState({ role: 'user', email: '', password: '' });
@@ -20,7 +21,7 @@ const Login = () => {
     setShowAccountsModal(true);
     setLoadingAccounts(true);
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/users');
+      const response = await axios.get(`${API}/api/auth/users`);
       setAccounts(response.data);
     } catch (err) {
       console.error('Failed to load accounts', err);
@@ -33,7 +34,7 @@ const Login = () => {
     setLoading(true);
     setShowAccountsModal(false);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/mock-google-login', { email });
+      const response = await axios.post(`${API}/api/auth/mock-google-login`, { email });
       console.log('Mock Google Login successful:', response.data);
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
@@ -68,7 +69,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/request-unblock', {
+      const response = await axios.post(`${API}/api/auth/request-unblock`, {
         email: blockedUserEmail,
         message: unblockMessage
       });
@@ -94,7 +95,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API}/api/auth/login`, {
         role: formData.role,
         email: formData.email,
         password: formData.password

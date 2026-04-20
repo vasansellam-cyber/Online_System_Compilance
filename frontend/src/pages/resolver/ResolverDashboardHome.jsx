@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FileText, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import '../user/UserDashboardHome.css'; // Reusing UserDashboardHome styles for stats cards
+const API = import.meta.env.VITE_API_URL;
 
 const ResolverDashboardHome = () => {
   const [stats, setStats] = useState({
@@ -16,7 +17,7 @@ const ResolverDashboardHome = () => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/complaints/resolver/stats', {
+        const response = await axios.get(`${API}/api/complaints/resolver/stats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(response.data);

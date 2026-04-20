@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Bell, CheckSquare, Info, AlertTriangle, CheckCircle, AlertCircle } from 'lucide-react';
+const API = import.meta.env.VITE_API_URL;
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -12,7 +13,7 @@ const Notifications = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/notifications', {
+      const response = await axios.get(`${API}/api/notifications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setNotifications(response.data);
@@ -30,7 +31,7 @@ const Notifications = () => {
   const markAllAsRead = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.patch('http://localhost:5000/api/notifications/read-all', {}, {
+      await axios.patch(`${API}/api/notifications/read-all`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchNotifications();
@@ -43,7 +44,7 @@ const Notifications = () => {
     if (!notif.read) {
       try {
         const token = localStorage.getItem('token');
-        await axios.patch(`http://localhost:5000/api/notifications/${notif._id}/read`, {}, {
+        await axios.patch(`${API}/api/notifications/${notif._id}/read`, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } catch (err) {

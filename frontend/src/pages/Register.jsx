@@ -3,6 +3,7 @@ import { Mail, Lock, UserPlus, AlertCircle, CheckCircle2 } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css'; // Utilizing the same CSS file for identical card layout
+const API = import.meta.env.VITE_API_URL;
 
 const Register = () => {
   const [formData, setFormData] = useState({ 
@@ -33,7 +34,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${API}/api/auth/register`, {
         role: formData.role,
         username: formData.username,
         email: formData.email,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CheckCircle, AlertCircle } from 'lucide-react';
 import '../user/UserComplaints.css'; // Reuse table styling
+const API = import.meta.env.VITE_API_URL;
 
 const ResolverComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -14,7 +15,7 @@ const ResolverComplaints = () => {
   const fetchComplaints = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/complaints/resolver', {
+      const response = await axios.get(`${API}/api/complaints/resolver`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setComplaints(response.data);
@@ -46,7 +47,7 @@ const ResolverComplaints = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.patch(`http://localhost:5000/api/complaints/${resolvingId}/status`, 
+      await axios.patch(`${API}/api/complaints/${resolvingId}/status`, 
         { status: 'Resolved', solution: solutionText },
         { headers: { Authorization: `Bearer ${token}` } }
       );

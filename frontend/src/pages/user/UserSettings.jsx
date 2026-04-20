@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Camera, Lock, CheckCircle, AlertCircle } from 'lucide-react';
 import './UserSettings.css';
+const API = import.meta.env.VITE_API_URL;
 
 const UserSettings = () => {
   const [passwords, setPasswords] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' });
@@ -31,7 +32,7 @@ const UserSettings = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:5000/api/users/password', 
+      await axios.put(`${API}/api/users/password`, 
         { oldPassword: passwords.oldPassword, newPassword: passwords.newPassword }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -68,7 +69,7 @@ const UserSettings = () => {
       
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.put('http://localhost:5000/api/users/profile-picture', 
+        const response = await axios.put(`${API}/api/users/profile-picture`, 
           { profilePicture: base64String },
           { headers: { Authorization: `Bearer ${token}` } }
         );
